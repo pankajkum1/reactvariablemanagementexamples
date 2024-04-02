@@ -5,9 +5,10 @@ import LanguageContext from './LanguageContext';
 const DisplaySelectedLanguage = function() 
 {
 
-   
+  // useContext('language')
   //value.abc
    return(
+    
     
   <LanguageContext.Consumer>
     {value=> (  <p> The chosen language is { value.language } </p>) }

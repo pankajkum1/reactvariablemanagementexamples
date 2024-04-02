@@ -1,4 +1,6 @@
-import React,{useEffect, useState} from 'react';
+import React,{useEffect, useRef, useState} from 'react';
+import { createStore } from 'redux';
+
 import LanguageContext from './LanguageContext';
 import DisplaySelectedLanguage from './DisplaySelectedLanguage';
 import ShowSomeMoreVarsFromContext from "./ShowSomeMoreVarsFromContext";
@@ -24,8 +26,79 @@ function App() {
 
 
   } , [])
+
+
+
+const initialState = 0;
+
+
+//slice is a reducer for reduxjs toolkit library 
+
+const counterReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'PLUS': {
+      return state + (action.payload || 0);
+    }
+    case 'MINUS': {
+      return state - (action.payload || 0);
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
+//shallow/weak reference to the variable in the DOM
+
+let inputRef= useRef();
+let input2Ref= useRef();
+
+
+
+const store = createStore(counterReducer);
+
+const initialstate = store.getState();
+
+store.dispatch({ type: 'PLUS', payload: 2 });
+const dispatch_1 = store.getState();
+
+store.dispatch({ type: 'PLUS', payload: 1 });
+const dispatch_2 = store.getState();
+
+store.dispatch({ type: 'MINUS', payload: 2 });
+const dispatch_3 = store.getState(); 
+
+
+//1
+
+store.dispatch({ type: 'PLUS', payload: 7 });
+const dispatch_4 = store.getState(); 
+
+//8
  
   return (
+
+  
+   <div>
+  <p> Initial state: { initialstate } </p>
+  <p> State after +2 payload: { dispatch_1 } </p>
+  <p> State after +1 payload: { dispatch_2 } </p>
+  <p> State after -2 payload: { dispatch_3 } </p>
+  <p> State after 7 payload: { dispatch_4 } </p>
+
+  <button onClick={()=>{inputRef.current.focus();}}>Focus switch to input1  using ref</button>
+  
+  
+  <button onClick={()=>{input2Ref.current.focus();}}>Focus switch to input2  using ref</button>
+  
+  
+  <input type="text" ref={inputRef} />
+  <input type="text" ref={input2Ref} />
+  
+</div>
+
+/*
+ 
     <div>
   <LanguageContext.Provider value={defaultValue}>
     <div className="content">
@@ -34,10 +107,16 @@ function App() {
         <DisplaySelectedLanguage />
         <ShowSomeMoreVarsFromContext />
       </div>
-    </div>
+    </div> 
     
   </LanguageContext.Provider>
-  </div>
+  </div> 
+
+  */
+
+  
+  
+
 )
 
   }
