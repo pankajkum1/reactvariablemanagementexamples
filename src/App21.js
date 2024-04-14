@@ -52,6 +52,15 @@ const counterReducer = (state = initialState, action) => {
 
 let inputRef= useRef();
 let input2Ref= useRef();
+const elementRef = useRef("");
+
+let [name, setName] = useState('pankaj');
+
+function Reset() {
+  setName('kumar');
+  elementRef.current.focus();
+  elementRef.current.style.color = "blue";
+}
 
 
 
@@ -97,6 +106,12 @@ const dispatch_4 = store.getState();
   
   <input type="text" ref={inputRef} />
   <input type="text" ref={input2Ref} />
+<p>
+  <h3>useRef Assignment</h3>
+<input ref={elementRef} type='text' value={name} onChange={(e)=> setName(e.target.value)}  ></input>
+    <button onClick={Reset}>Reset</button>
+</p>
+
   
 </div>
 
